@@ -2,6 +2,7 @@ import Public_Function
 import Naver_top
 import Naver_finance
 import SearchStockCode
+import Naver_F_info
 
 Public_Function.ChangeDirectory()
 
@@ -16,12 +17,14 @@ if input_data == '0' :
 
     # 재무상황
     for rank, up in enumerate(output_arr) :
+
+        #[23.05.31] 네이버증권 종목정보 추가. (0622완료)
+        Naver_F_info.stock_info(up['code'], rank)
+
         Naver_finance.stock_finance(up['code'], rank)
 
         #[23.05.31] 네이버증권 사이트 추가.
         #[23.05.31] 네이버증권 EPS, PER, BPS, PBR
-        #[23.05.31] 네이버증권 종목정보 추가.
-        
         #[23.05.31] 네이버증권> 전자공시
 
 
@@ -37,6 +40,7 @@ elif input_data == '1' :
         print("종목이름을 올바르게 입력하시오.")
         exit
 
+    Naver_F_info.stock_info(stock_Code, 0)
     # 재무상황
     Naver_finance.stock_finance(stock_Code, 0)
     
