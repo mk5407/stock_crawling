@@ -47,7 +47,7 @@ def get_today_top(count):
 
         f.close()
 
-        item_dict = {'name':title_up, 'code':item_code, }
+        item_dict = {'name':title_up, 'code':item_code, }``
         item_arr.append(copy.deepcopy(item_dict))
        
         
