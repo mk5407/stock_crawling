@@ -53,12 +53,13 @@ def stock_finance(item_code, rank):
       for iter, (prev, cur, diff_key) in enumerate(zip(dict_array[i-1].values(), dict_array[i].values(), diff_array[i])):
          diff = 0
          if iter == 0 : continue
-         if (cur == '') : diff = 0
+         if (cur == '' or cur =='-' ) : diff = 0
+         elif (prev == '' or prev =='-' ) : diff = 0
          else : 
             if '.' in cur :
                diff = float(cur.replace(',', '')) - float(prev.replace(',', ''))
                diff = round(diff, 2)
-            else:      
+            else :      
                diff = int(cur.replace(',', '')) - int(prev.replace(',', ''))
                diff = format(diff, ',')
 
