@@ -21,13 +21,12 @@ if input_data == '0' :
         #[23.05.31] 네이버증권 종목정보 추가. (0622완료)
         Naver_F_info.stock_info(up['code'], rank)
 
-        Naver_finance.stock_finance(up['code'], rank)
-
         #[23.05.31] 네이버증권 사이트 추가.
         #[23.05.31] 네이버증권 EPS, PER, BPS, PBR
+        Naver_finance.stock_finance(up['code'], rank)
+
         #[23.05.31] 네이버증권> 전자공시
-
-
+        # 네이버 뉴스 7개
         Naver_top.get_todayNews(up['name'], rank, 7)
 
 elif input_data == '1' :

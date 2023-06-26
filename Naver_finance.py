@@ -4,6 +4,7 @@ import csv
 import time
 
 from bs4 import BeautifulSoup
+from Public_Function import g_encoding
 
 def stock_finance(item_code, rank):
 
@@ -35,7 +36,9 @@ def stock_finance(item_code, rank):
 
       dict_array[j][key] = obj_year.text.strip()
 
-      for k in range(1, 5):
+      arr_row = [1,2,3,4,7,10,11,12,13]
+
+      for k in arr_row:
          obj_key = main_html.select_one('#content > div.section.cop_analysis > div.sub_section > table > tbody > tr:nth-child(' + str(k) + ') > th > strong')
          if obj_key == None : return
 
@@ -52,7 +55,7 @@ def stock_finance(item_code, rank):
          if iter == 0 : continue
          if (cur == '') : diff = 0
          else : 
-            if iter == 4 :
+            if '.' in cur :
                diff = float(cur.replace(',', '')) - float(prev.replace(',', ''))
                diff = round(diff, 2)
             else:      
@@ -64,19 +67,25 @@ def stock_finance(item_code, rank):
 
    now = time
    out_str = '{}_'.format(rank)+item_name
-   f = open(out_str+'.csv', 'a', encoding='utf-8', newline='')
+   f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
    wr = csv.writer(f)
 
+   wr.writerow('\n')
+   wr.writerow(['네이버증권'])
+   wr.writerow([main_url])
    wr.writerow('\n')
    wr.writerow(['재무재표요약'])
 
    for key in diff_array[0]:
+
+      if key == 'EPS(원)':   wr.writerow('\n')
+
       output_arr = [key,]
       for stock_dict in diff_array:
          output_arr.append(stock_dict[key])
 
       wr.writerow(output_arr)
-
+    
    f.close()
 
    # for key in diff_array[0]:
@@ -86,4 +95,3 @@ def stock_finance(item_code, rank):
    #    for stock_dict in diff_array:
    #       str += strForma2 % (stock_dict[key])
    #     wr.writerow(str)
-

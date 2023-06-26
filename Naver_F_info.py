@@ -4,6 +4,7 @@ import csv
 import time
 
 from bs4 import BeautifulSoup
+from Public_Function import g_encoding
 
 def stock_info(item_code, rank):
 
@@ -22,7 +23,7 @@ def stock_info(item_code, rank):
       output_arr.append(''.join(find_text))
    now = time
    out_str = '{}_'.format(rank)+item_name
-   f = open(out_str+'.csv', 'a', encoding='utf-8', newline='')
+   f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
    wr = csv.writer(f)
    wr.writerow(output_arr)
 

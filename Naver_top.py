@@ -6,6 +6,7 @@ import time
 import string
 
 from bs4 import BeautifulSoup
+from Public_Function import g_encoding
 
 def get_today_top(count):
     URL = 'https://finance.naver.com/'
@@ -30,7 +31,7 @@ def get_today_top(count):
         item_code = unit.select_one('#_topItems2 > tr> th > a')['href'].split('=')[1]
 
         out_str = '{}_'.format(index) + title_up
-        f = open(out_str+'.csv', 'a', encoding='utf-8', newline='')
+        f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
         wr = csv.writer(f)
         
         out_arr=[]
@@ -62,7 +63,7 @@ def get_todayNews(item_name, rank, count) :
 
     now = time
     out_str = '{}_'.format(rank) + item_name
-    f = open(out_str+'.csv', 'a', encoding='utf-8', newline='')
+    f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
     wr = csv.writer(f)
     wr.writerow('\n\n')
     wr.writerow(['관련된 뉴스기사'])

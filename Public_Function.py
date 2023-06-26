@@ -1,5 +1,17 @@
 import os
 import time
+import platform
+
+# check platform 
+# Linux: Linux
+# Mac: Darwin
+# Windows: Windows
+
+g_os = platform.system()
+g_encoding=''
+if g_os=='Windows': g_encoding='ANSI'
+else : g_encoding='utf-8'
+
 
 def createDirectory(directory):
     try:
