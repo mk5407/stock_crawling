@@ -15,8 +15,13 @@ def get_today_top(count):
     units_up =  html.select('#_topItems2>tr')  # 오늘 상한가 종목들 전부 다 가져오는거
 
     item_arr = []
-    now = time
 
+    out_dict = [] 
+    out_arr = []
+    for i in range(count):
+      out_arr.append(out_dict.copy())
+
+    now = time
     print('=====금일 상한가 종목=====')
     print()
 
@@ -29,29 +34,18 @@ def get_today_top(count):
         percent_up = unit.select_one('#_topItems2 > tr> td:nth-child(4)')
         
         item_code = unit.select_one('#_topItems2 > tr> th > a')['href'].split('=')[1]
-
-        out_str = '{}_'.format(index) + title_up
-        f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
-        wr = csv.writer(f)
         
-        out_arr=[]
-        out_arr.append(['종목 이름',title_up])
-        out_arr.append(['한 주당 가격', price_up.text])
-        out_arr.append(['전날 대비 가격 변동',up])
-        out_arr.append(['전날 대비 등락',percent_up.text])
-
-        for str in out_arr : 
-            print(str)
-            wr.writerow(str)    
+        out_arr[index].append(['종목 이름',title_up])
+        out_arr[index].append(['한 주당 가격', price_up.text])
+        out_arr[index].append(['전날 대비 가격 변동',up])
+        out_arr[index].append(['전날 대비 등락',percent_up.text])
 
         print('\n')
-
-        f.close()
 
         item_dict = {'name':title_up, 'code':item_code, }
         item_arr.append(copy.deepcopy(item_dict))
 
-    return item_arr
+    return item_arr, out_arr
 
 def get_todayNews(item_name, rank, count) :
 
@@ -78,3 +72,14 @@ def get_todayNews(item_name, rank, count) :
         wr.writerow('\n')
 
     f.close()
+
+def print_upItem(item_name, rank, output_str):  
+    out_str = '{}_'.format(rank)+item_name
+    f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
+    wr = csv.writer(f)
+
+    for str in output_str : 
+        print(str)
+        wr.writerow(str)
+
+    f.close()    
