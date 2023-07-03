@@ -13,17 +13,23 @@ if input_data == '0' :
     input_count = input(" Top 몇개까지? ")
     
     # 상승한애들 이름, code 가져옴.
-    output_arr = Naver_top.get_today_top(int(input_count))
+    item_arr, output_arr = Naver_top.get_today_top(int(input_count))
 
     # 재무상황
-    for rank, up in enumerate(output_arr) :
+    for rank, up in enumerate(item_arr) :
+        #[23.05.31] 네이버증권 사이트 추가.
+        #[23.05.31] 네이버증권 EPS, PER, BPS, PBR
+
+        output_dict = Naver_finance.stock_finance(up['code'], rank, True)
+
+        if type(output_dict) != list  : continue
+       
+        Naver_top.print_upItem(up['name'], rank, output_arr[rank])
 
         #[23.05.31] 네이버증권 종목정보 추가. (0622완료)
         Naver_F_info.stock_info(up['code'], rank)
 
-        #[23.05.31] 네이버증권 사이트 추가.
-        #[23.05.31] 네이버증권 EPS, PER, BPS, PBR
-        Naver_finance.stock_finance(up['code'], rank)
+        Naver_finance.print_upItem(up['name'], up['code'], rank, output_dict)
 
         #[23.05.31] 네이버증권> 전자공시
         # 네이버 뉴스 7개
@@ -40,9 +46,10 @@ elif input_data == '1' :
         exit
 
     Naver_F_info.stock_info(stock_Code, 0)
+
     # 재무상황
-    Naver_finance.stock_finance(stock_Code, 0)
-    
+    Naver_finance.stock_finance(stock_Code, 0, False)
+
     # 오늘 뉴스
     Naver_top.get_todayNews(input_stockName, 0, 5)
 
