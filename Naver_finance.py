@@ -96,6 +96,8 @@ def print_upItem(item_name,item_code, rank, output_dict):
    wr.writerow('\n')
    wr.writerow(['네이버증권'])
    wr.writerow(['https://finance.naver.com/item/main.naver?code=' + item_code])
+   wr.writerow(['전자공시'])
+   wr.writerow(['https://finance.naver.com/item/dart.naver?code=' + item_code])
    wr.writerow('\n')
    wr.writerow(['재무재표요약'])
 
