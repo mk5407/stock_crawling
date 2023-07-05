@@ -88,6 +88,37 @@ def stock_finance(item_code, rank, check_critria):
 
    return diff_array
 
+
+def isFloat(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
+def today_changes(item_name, item_code):
+
+   main_url = 'https://finance.naver.com/item/main.naver?code='+ item_code
+   raw = requests.get(main_url)
+   main_html = BeautifulSoup(raw.text, 'lxml')
+
+   arr_blinds =  main_html.findAll('span',{'class':"blind"})
+   change_keywords = ['현재가','전일대비','퍼센트','전일가','고가','상한가','거래량','시가','저가','거래대금']
+   
+   index = 0
+   today_data = {'종목이름':item_name}
+
+   for info in arr_blinds :
+      info_text = info.text.strip('').replace(',','')
+      if (info_text.isdigit() == False) and (isFloat(info_text) == False) :
+         continue
+
+      key = change_keywords[index]
+      today_data[key] = info_text
+      index+=1
+   
+   return today_data
+
 def print_upItem(item_name,item_code, rank, output_dict):  
    out_str = '{}_'.format(rank)+item_name
    f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
