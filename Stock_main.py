@@ -48,8 +48,8 @@ elif input_data == '1' :
     Naver_F_info.stock_info(stock_Code, 0)
 
     # 재무상황
-    Naver_finance.stock_finance(stock_Code, 0, False)
-
+    output_dict = Naver_finance.stock_finance(stock_Code, 0, False)
+    Naver_finance.print_upItem(input_stockName, stock_Code, 0, output_dict)
     # 오늘 뉴스
     Naver_top.get_todayNews(input_stockName, 0, 5)
 
