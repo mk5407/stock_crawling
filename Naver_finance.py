@@ -75,7 +75,7 @@ def stock_finance(item_code, rank, check_critria):
                if iter == row :
                   if iter == 7 : #PER
                      if (cur == '' or cur =='-' ) : cur = 0
-                     if ( float(cur) > 50 or float(cur) < 0 ) : fail_array[index]+=1
+                     if ((type(cur) == float) and ( float(cur) > 50 or float(cur) < 0 )) : fail_array[index]+=1
                   else :
                      if diff_value < 0 : fail_array[index]+=1
                
