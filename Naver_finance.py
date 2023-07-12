@@ -75,7 +75,7 @@ def stock_finance(item_code, rank, check_critria):
                if iter == row :
                   if iter == 7 : #PER
                      if (cur == '' or cur =='-' ) : cur = 0
-                     if ((type(cur) == float) and ( float(cur) > 50 or float(cur) < 0 )) : fail_array[index]+=1
+                     if ((type(cur) == str) and ( float(cur) > 30 or float(cur) < 0 )) : fail_array[index]+=1
                   else :
                      if diff_value < 0 : fail_array[index]+=1
                
@@ -117,6 +117,10 @@ def today_changes(item_name, item_code):
       today_data[key] = info_text
       index+=1
    
+   if today_data['현재가'] < today_data['전일가'] :
+      today_data['전일대비'] = '-{}'.format(today_data['전일대비'])
+      today_data['퍼센트'] = '-{}'.format(today_data['퍼센트'])
+
    return today_data
 
 def print_upItem(item_name,item_code, rank, output_dict):  
