@@ -114,7 +114,12 @@ def today_changes(item_name, item_code):
          continue
 
       key = change_keywords[index]
-      today_data[key] = info_text
+      
+      if info_text.isdigit() == True :
+         today_data[key] = format(int(info_text), ',')
+      else :
+         today_data[key] = format(float(info_text), ',')
+         
       index+=1
    
    if today_data['현재가'] < today_data['전일가'] :
