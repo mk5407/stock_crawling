@@ -153,10 +153,41 @@ def print_upItem(item_name,item_code, rank, output_dict):
    f.close()
 
 
-   # for key in diff_array[0]:
-   #    strFormat = '%-20s'
-   #    strForma2 = '%-30s'
-   #    str = strFormat % (key)
-   #    for stock_dict in diff_array:
-   #       str += strForma2 % (stock_dict[key])
-   #     wr.writerow(str)
+def stock_allChanges(item_name, item_code):
+
+   all_finance_changes = []
+   change_keywords = ['날짜','종가','전일비','등락률','거래량','기관_순매','외_순매','외_보유','외_보유율']
+
+   for i in range(1, 10):
+
+      main_url = 'https://finance.naver.com/item/frgn.naver?code='+ item_code + '&page='+ str(i)
+
+      headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.188'}
+      r = requests.get(main_url, headers = headers)
+      soup = BeautifulSoup(r.text, 'html.parser')
+      datas = soup.findAll('tr',{'onmouseover':"mouseOver(this)"})
+      
+      for index, day_data in enumerate(datas):
+         
+         data_dict = {}
+         one_data = day_data.findAll('td')
+
+         for index, data in enumerate(one_data):
+            key = change_keywords[index]
+            data_dict[key]= data.text.strip()
+
+         all_finance_changes.append(data_dict)
+
+   now = time
+   file_name = 'C:\Python\Test\Trading\\' + item_name + '_'+ now.strftime('%Y-%m-%d')+'.csv'
+
+   output_file = open(file_name , 'a', encoding=g_encoding, newline='')
+   writer = csv.writer(output_file)    
+   writer.writerow(all_finance_changes[0].keys())
+
+   for day in all_finance_changes:
+      writer.writerow(day.values())
+
+   output_file.close()
+
+   return 0

@@ -42,12 +42,12 @@ def tracking_stock_main(today_tracking, stock_tracking) :
     
     f.close()
 
-   
-
     now = time
 # 해당 날짜에 정렬
     if today_tracking :
-        output_file = open(now.strftime('%Y-%m-%d')+'.csv', 'a', encoding=g_encoding, newline='')
+        file_name = 'C:\Python\Test\Tracking_List\\'+ now.strftime('%Y-%m-%d') +'.csv'
+
+        output_file = open(file_name, 'a', encoding=g_encoding, newline='')
         writer = csv.writer(output_file)    
         writer.writerow(all_changes[0].keys())
 
@@ -76,4 +76,4 @@ def tracking_stock_main(today_tracking, stock_tracking) :
             daily_writer.writerow(stock.values())
             stock_file.close()
 
-tracking_stock_main(True,True)
+tracking_stock_main(True, False)
