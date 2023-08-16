@@ -7,7 +7,7 @@ import Naver_F_info
 def stock_main():
     Public_Function.ChangeDirectory()
 
-    input_data = input(" 0 (상한가뽑기) or 1 (종목분석) :  ")
+    input_data = input(" 0 (상한가뽑기) or 1 (종목분석) or 2 (거래량전체) :  ")
 
     if input_data == '0' :
 
@@ -36,7 +36,7 @@ def stock_main():
             # 네이버 뉴스 7개
             Naver_top.get_todayNews(up['name'], rank, 7)
 
-    elif input_data == '1' :
+    else : 
 
         input_stockName = input(" 종목이름은? ")
 
@@ -45,20 +45,20 @@ def stock_main():
         if stock_Code == 0 :
             print("종목이름을 올바르게 입력하시오.")
             exit
+        if input_data == '1' :
 
-        Naver_F_info.stock_info(stock_Code, 0)
+            Naver_F_info.stock_info(stock_Code, 0)
 
-        # 재무상황
-        output_dict = Naver_finance.stock_finance(stock_Code, 0, False)
-        Naver_finance.print_upItem(input_stockName, stock_Code, 0, output_dict)
-        # 오늘 뉴스
-        Naver_top.get_todayNews(input_stockName, 0, 5)
+            # 재무상황
+            output_dict = Naver_finance.stock_finance(stock_Code, 0, False)
+            Naver_finance.print_upItem(input_stockName, stock_Code, 0, output_dict)
+            # 오늘 뉴스
+            Naver_top.get_todayNews(input_stockName, 0, 5)
 
-        # 오늘 상승률?
-        # 닥스
-
-    else :
-        print('똑바로 입력하세요!')
+        elif input_data == '2' :
+            Naver_finance.stock_allChanges(input_stockName,stock_Code)
+        else :
+            print('똑바로 입력하세요!')
 
 
 stock_main()

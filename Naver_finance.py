@@ -158,7 +158,7 @@ def stock_allChanges(item_name, item_code):
    all_finance_changes = []
    change_keywords = ['날짜','종가','전일비','등락률','거래량','기관_순매','외_순매','외_보유','외_보유율']
 
-   for i in range(1, 10):
+   for i in range(1, 7):
 
       main_url = 'https://finance.naver.com/item/frgn.naver?code='+ item_code + '&page='+ str(i)
 
@@ -167,7 +167,7 @@ def stock_allChanges(item_name, item_code):
       soup = BeautifulSoup(r.text, 'html.parser')
       datas = soup.findAll('tr',{'onmouseover':"mouseOver(this)"})
       
-      for index, day_data in enumerate(datas):
+      for day_data in datas:
          
          data_dict = {}
          one_data = day_data.findAll('td')
@@ -185,7 +185,9 @@ def stock_allChanges(item_name, item_code):
    writer = csv.writer(output_file)    
    writer.writerow(all_finance_changes[0].keys())
 
-   for day in all_finance_changes:
+   total_count = len(all_finance_changes)
+
+   for day in reversed(all_finance_changes):
       writer.writerow(day.values())
 
    output_file.close()
