@@ -47,7 +47,7 @@ def get_today_top(count):
 
     return item_arr, out_arr
 
-def get_todayNews(item_name, rank, count) :
+def get_todayNews(item_name, item_sector, rank, count) :
 
     news_up = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=news&query='+ item_name
     raw2 = requests.get(news_up)
@@ -56,7 +56,7 @@ def get_todayNews(item_name, rank, count) :
     news_up_list = news_up_box.find_all('div',{'class':'news_area'}) # 박스
 
     now = time
-    out_str = '{}_'.format(rank) + item_name
+    out_str = '{}_{}({})'.format(rank,item_name,item_sector)
     f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
     wr = csv.writer(f)
     wr.writerow('\n\n')

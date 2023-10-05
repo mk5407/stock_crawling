@@ -13,21 +13,24 @@ def stock_finance(item_code, rank, check_critria):
    main_html = BeautifulSoup(raw.text, 'lxml')
 
    item_name = main_html.select_one('#middle > div.h_company > div.wrap_company > h2 > a').text
-   print('%50s' % item_name)
+   item_sector = main_html.select_one('#content > div.section.trade_compare > h4 > em > a').text
+
+   print('\n         {} ({})        \n'.format (item_name, item_sector))
 
    stock_dict = {}
    dict_array = []
    diff_array = []
 
-   for i in range(4):
+   for i in range(6):
       dict_array.append(stock_dict.copy())
       diff_array.append(stock_dict.copy())
 
-   for i in range(1, 5):
-      j = i-1
+   start_index = 5
+   for i in range(start_index, 11):
+      j = i-start_index
 
       # 연도
-      key = 'YEAR'
+      key = '분기'
 
       obj_year = main_html.select_one('#content > div.section.cop_analysis > div.sub_section > table > thead > tr:nth-child(2) > th:nth-child('+str(i)+')')
       
@@ -50,7 +53,7 @@ def stock_finance(item_code, rank, check_critria):
    check_row = [1,2,7]
    fail_array = [0, 0, 0]
    
-   for i in range(0, 4):
+   for i in range(0, 6):
       diff_array[i] = copy.deepcopy(dict_array[i])
 
       if i == 0:  continue
@@ -75,18 +78,18 @@ def stock_finance(item_code, rank, check_critria):
                if iter == row :
                   if iter == 7 : #PER
                      if (cur == '' or cur =='-' ) : cur = 0
-                     if ((type(cur) == str) and ( float(cur) > 30 or float(cur) < 0 )) : fail_array[index]+=1
+                     if ((type(cur) == str) and ( float(cur) > 50 or float(cur) < 0 )) : fail_array[index]+=1
                   else :
                      if diff_value < 0 : fail_array[index]+=1
                
-               if fail_array[index] >= 2 : 
+               if fail_array[index] >= 4 : 
                   print("Critria fail Because {} ".format(diff_key))
                   return
          
          output_str = "{} ({})".format(cur, diff_str)
          diff_array[i][diff_key] = output_str
 
-   return diff_array
+   return diff_array, item_sector
 
 
 def isFloat(s):
@@ -128,8 +131,9 @@ def today_changes(item_name, item_code):
 
    return today_data
 
-def print_upItem(item_name,item_code, rank, output_dict):  
-   out_str = '{}_'.format(rank)+item_name
+def print_upItem(item_name, item_sector, item_code, rank, output_dict):
+
+   out_str = '{}_{}({})'.format(rank,item_name,item_sector)
    f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
    wr = csv.writer(f)
 

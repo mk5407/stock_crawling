@@ -21,7 +21,7 @@ def stock_main():
             #[23.05.31] 네이버증권 사이트 추가.
             #[23.05.31] 네이버증권 EPS, PER, BPS, PBR
 
-            output_dict = Naver_finance.stock_finance(up['code'], rank, True)
+            (output_dict, output_sector) = Naver_finance.stock_finance(up['code'], rank, True)
 
             if type(output_dict) != list  : continue
         
@@ -30,11 +30,11 @@ def stock_main():
             #[23.05.31] 네이버증권 종목정보 추가. (0622완료)
             Naver_F_info.stock_info(up['code'], rank)
 
-            Naver_finance.print_upItem(up['name'], up['code'], rank, output_dict)
+            Naver_finance.print_upItem(up['name'], output_sector, up['code'], rank, output_dict)
 
             #[23.05.31] 네이버증권> 전자공시
             # 네이버 뉴스 7개
-            Naver_top.get_todayNews(up['name'], rank, 7)
+            Naver_top.get_todayNews(up['name'], output_sector, rank, 7)
 
     else : 
 
