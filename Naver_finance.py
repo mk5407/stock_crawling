@@ -35,7 +35,7 @@ def stock_finance(item_code, rank, check_critria):
       obj_year = main_html.select_one('#content > div.section.cop_analysis > div.sub_section > table > thead > tr:nth-child(2) > th:nth-child('+str(i)+')')
       
       # 신규상장주
-      if obj_year == None : return
+      if obj_year == None : return (None,None)
 
       dict_array[j][key] = obj_year.text.strip()
 
@@ -45,7 +45,7 @@ def stock_finance(item_code, rank, check_critria):
          obj_key = main_html.select_one('#content > div.section.cop_analysis > div.sub_section > table > tbody > tr:nth-child(' + str(k) + ') > th > strong')
          if obj_key == None : 
             print("신규상장 주식")
-            return
+            return (None,None)
 
          main_key = obj_key.text.strip()
          dict_array[j][main_key] = main_html.select_one('#content > div.section.cop_analysis > div.sub_section > table > tbody > tr:nth-child('+ str(k) + ')> td:nth-child(' + str(i + 1) + ')').text.strip()
@@ -84,12 +84,12 @@ def stock_finance(item_code, rank, check_critria):
                
                if fail_array[index] >= 4 : 
                   print("Critria fail Because {} ".format(diff_key))
-                  return
+                  return (None,None)
          
          output_str = "{} ({})".format(cur, diff_str)
          diff_array[i][diff_key] = output_str
 
-   return diff_array, item_sector
+   return (diff_array, item_sector)
 
 
 def isFloat(s):

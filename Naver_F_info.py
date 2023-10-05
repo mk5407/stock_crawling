@@ -6,7 +6,7 @@ import time
 from bs4 import BeautifulSoup
 from Public_Function import g_encoding
 
-def stock_info(item_code, rank):
+def stock_info(item_code, item_sector, rank):
 
    main_url = 'https://finance.naver.com/item/coinfo.naver?code=' + item_code
    raw = requests.get(main_url)
@@ -22,7 +22,7 @@ def stock_info(item_code, rank):
       find_text = info.find('div',{'id','summary_info'}).text.strip()
       output_arr.append(''.join(find_text))
    now = time
-   out_str = '{}_'.format(rank)+item_name
+   out_str = '{}_{}({})'.format(rank,item_name,item_sector)
    f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
    wr = csv.writer(f)
    wr.writerow(output_arr)

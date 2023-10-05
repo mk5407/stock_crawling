@@ -25,10 +25,10 @@ def stock_main():
 
             if type(output_dict) != list  : continue
         
-            Naver_top.print_upItem(up['name'], rank, output_arr[rank])
+            Naver_top.print_upItem(up['name'], output_sector, rank, output_arr[rank])
 
             #[23.05.31] 네이버증권 종목정보 추가. (0622완료)
-            Naver_F_info.stock_info(up['code'], rank)
+            Naver_F_info.stock_info(up['code'], output_sector, rank)
 
             Naver_finance.print_upItem(up['name'], output_sector, up['code'], rank, output_dict)
 

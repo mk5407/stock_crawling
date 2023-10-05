@@ -73,8 +73,9 @@ def get_todayNews(item_name, item_sector, rank, count) :
 
     f.close()
 
-def print_upItem(item_name, rank, output_str):  
-    out_str = '{}_'.format(rank)+item_name
+def print_upItem(item_name, item_sector, rank, output_str): 
+
+    out_str = '{}_{}({})'.format(rank,item_name,item_sector)
     f = open(out_str+'.csv', 'a', encoding=g_encoding, newline='')
     wr = csv.writer(f)
 
