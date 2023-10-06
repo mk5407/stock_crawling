@@ -26,3 +26,9 @@ def ChangeDirectory() :
     directory = 'C:\Python\Test\\'+ now.strftime('%Y-%m-%d')
     createDirectory(directory)
     os.chdir(directory)
+
+def ChangeTodaySubDirectory() :
+    now = time
+    directory = 'C:\Python\Test\Verify\\'+ now.strftime('%Y-%m-%d')
+    createDirectory(directory)
+    os.chdir(directory)

@@ -5,11 +5,12 @@ import SearchStockCode
 import Naver_F_info
 
 def stock_main():
-    Public_Function.ChangeDirectory()
+    
 
-    input_data = input(" 0 (상한가뽑기) or 1 (종목분석) or 2 (거래량전체) :  ")
+    input_data = input(" 0 (상한가뽑기) or 1 (종목분석) or 2 (거래량전체) or 3 (MyList 검증) :  ")
 
     if input_data == '0' :
+        Public_Function.ChangeDirectory()
 
         input_count = input(" Top 몇개까지? ")
         
@@ -36,8 +37,39 @@ def stock_main():
             # 네이버 뉴스 7개
             Naver_top.get_todayNews(up['name'], output_sector, rank, 7)
 
-    else : 
+    elif input_data == '3' :
 
+        f = open('stock_list.txt', 'rt', encoding='UTF8')
+        Public_Function.ChangeTodaySubDirectory()
+
+        line_num = 1
+        f.readline()
+
+        # [23.07.05 code도 뽑아오기.]
+        while True:
+            line = f.readline()
+
+            if not line : break
+
+            stock_str = line.strip().split(',')
+
+            stock_name = stock_str[0]
+
+            if stock_name == '': continue
+            if stock_name.find('@') != -1 : continue
+            
+            stock_code = stock_str[1]
+
+            (output_dict, output_sector) = Naver_finance.stock_finance(stock_code, 0, True)
+            
+            if type(output_dict) != list  : continue
+        
+            Naver_F_info.stock_info(stock_code, output_sector, 0)
+            Naver_finance.print_upItem(stock_name, output_sector, stock_code, 0, output_dict)
+        
+        f.close()
+    else : 
+        Public_Function.ChangeDirectory()
         input_stockName = input(" 종목이름은? ")
 
         stock_Code =  SearchStockCode.searchCode(input_stockName)
@@ -47,13 +79,13 @@ def stock_main():
             exit
         if input_data == '1' :
 
-            Naver_F_info.stock_info(stock_Code, 0)
-
             # 재무상황
-            output_dict = Naver_finance.stock_finance(stock_Code, 0, False)
-            Naver_finance.print_upItem(input_stockName, stock_Code, 0, output_dict)
+            (output_dict, output_sector) = Naver_finance.stock_finance(stock_Code, 0, False)
+
+            Naver_F_info.stock_info(stock_Code, output_sector, 0)
+            Naver_finance.print_upItem(input_stockName, output_sector, stock_Code, 0, output_dict)
             # 오늘 뉴스
-            Naver_top.get_todayNews(input_stockName, 0, 5)
+            Naver_top.get_todayNews(input_stockName, output_sector, 0, 5)
 
         elif input_data == '2' :
             Naver_finance.stock_allChanges(input_stockName,stock_Code)
