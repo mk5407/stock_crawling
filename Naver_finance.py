@@ -13,7 +13,12 @@ def stock_finance(item_code, rank, check_critria):
    main_html = BeautifulSoup(raw.text, 'lxml')
 
    item_name = main_html.select_one('#middle > div.h_company > div.wrap_company > h2 > a').text
-   item_sector = main_html.select_one('#content > div.section.trade_compare > h4 > em > a').text
+
+   sector_check = main_html.select_one('#content > div.section.trade_compare > h4 > em > a')
+
+   if sector_check == None : return (None,None)
+
+   item_sector = sector_check.text
 
    print('\n         {} ({})        \n'.format (item_name, item_sector))
 
@@ -78,7 +83,11 @@ def stock_finance(item_code, rank, check_critria):
                if iter == row :
                   if iter == 7 : #PER
                      if (cur == '' or cur =='-' ) : cur = 0
-                     if ((type(cur) == str) and ( float(cur) > 50 or float(cur) < 0 )) : fail_array[index]+=1
+                     if (type(cur) == str) :
+                         try :
+                           if ( float(cur) > 50 or float(cur) < 0 ) : fail_array[index]+=1
+                         except:
+                           print("PER 1000이상 있음.")
                   else :
                      if diff_value < 0 : fail_array[index]+=1
                

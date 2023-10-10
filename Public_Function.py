@@ -23,7 +23,7 @@ def createDirectory(directory):
 
 def ChangeDirectory() :
     now = time
-    directory = 'C:\Python\Test\\'+ now.strftime('%Y-%m-%d')
+    directory = 'C:\Python\Test\Daily\\'+ now.strftime('%Y-%m-%d')
     createDirectory(directory)
     os.chdir(directory)
 

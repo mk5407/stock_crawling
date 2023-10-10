@@ -5,7 +5,6 @@ import SearchStockCode
 import Naver_F_info
 
 def stock_main():
-    
 
     input_data = input(" 0 (상한가뽑기) or 1 (종목분석) or 2 (거래량전체) or 3 (MyList 검증) :  ")
 
