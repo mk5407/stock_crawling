@@ -205,4 +205,4 @@ def stock_allChanges(item_name, item_code):
 
    output_file.close()
 
-   return 0
+   return 

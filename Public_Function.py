@@ -21,14 +21,56 @@ def createDirectory(directory):
         print("Error: Failed to create the directory.")
 
 
-def ChangeDirectory() :
+def changeDirectory() :
     now = time
     directory = 'C:\Python\Test\Daily\\'+ now.strftime('%Y-%m-%d')
     createDirectory(directory)
     os.chdir(directory)
 
-def ChangeTodaySubDirectory() :
+def changeTodaySubDirectory() :
     now = time
     directory = 'C:\Python\Test\Verify\\'+ now.strftime('%Y-%m-%d')
     createDirectory(directory)
     os.chdir(directory)
+
+def getMyList():
+    f = open('stock_list.txt', 'rt', encoding='UTF8')
+
+    all_stockNames=[]
+    all_stockCodes=[]
+
+    line_num = 1
+    f.readline()
+
+    # [23.07.05 code도 뽑아오기.]
+    while True:
+        line = f.readline()
+
+        if not line : break
+
+        stock_str = line.strip().split(',')
+        stock_name = stock_str[0]
+
+        if stock_name == '': continue
+        if stock_name.find('@') != -1 : continue
+        
+        stock_code = stock_str[1]
+
+        all_stockNames.append(stock_name)
+        all_stockCodes.append(stock_code)
+
+        line_num += 1
+    
+    f.close()
+
+
+    return all_stockNames, all_stockCodes
+
+
+def findCode(stockName, stockNameList, stockCodeList) :
+
+    for index, name in enumerate(stockNameList) :
+        if(stockName==stockNameList[index]) :
+            return stockCodeList[index] 
+
+    return 0
