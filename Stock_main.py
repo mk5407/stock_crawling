@@ -33,10 +33,11 @@ def today_upper():
         #[23.05.31] 네이버증권> 전자공시
         # 네이버 뉴스 7개
         Naver_top.get_todayNews(up['name'], output_sector, rank, 7)
+
+    Public_Function.changeProjectDirectory()
     return
 
 def getTodayData(stockName, stockCode):
-
     Public_Function.changeDirectory()
 
     if stockName == None:
@@ -57,6 +58,7 @@ def getTodayData(stockName, stockCode):
     # 오늘 뉴스
     Naver_top.get_todayNews(stockName, output_sector, 0, 5)
 
+    Public_Function.changeProjectDirectory()
     return
 
 
@@ -88,4 +90,5 @@ def checkMyList():
         Naver_F_info.stock_info(stock_code, output_sector, 0)
         Naver_finance.print_upItem(stock_name, output_sector, stock_code, 0, output_dict)
     
+    Public_Function.changeProjectDirectory()
     return

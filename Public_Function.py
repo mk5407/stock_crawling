@@ -12,6 +12,7 @@ g_encoding=''
 if g_os=='Windows': g_encoding='ANSI'
 else : g_encoding='utf-8'
 
+g_projDir=os.getcwd()
 
 def createDirectory(directory):
     try:
@@ -20,6 +21,8 @@ def createDirectory(directory):
     except OSError:
         print("Error: Failed to create the directory.")
 
+def changeProjectDirectory():
+    os.chdir(g_projDir)
 
 def changeDirectory() :
     now = time

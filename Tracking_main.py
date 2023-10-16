@@ -10,7 +10,6 @@ import os.path
 from Public_Function import g_encoding
 
 def tracking() :
-
     f = open('stock_list.txt', 'rt', encoding='UTF8')
     Public_Function.changeDirectory()
 
@@ -54,6 +53,7 @@ def tracking() :
         writer.writerow(stock.values())
 
     output_file.close()
+    Public_Function.changeProjectDirectory()
 
 #    # 종목별로 출력추가
 #     if stock_tracking :
