@@ -64,13 +64,16 @@ def get_todayNews(item_name, item_sector, rank, count) :
     
     for new in news_up_list[:count]:
         new_title_up = new.find('a',{'class' : 'news_tit'})
-        wr.writerow([new_title_up.text])
-        link_up = new.find('a',{'class' : 'api_txt_lines dsc_txt_wrap'})
 
-        new_up = link_up['href']
-        wr.writerow([new_up])
-        wr.writerow('\n')
+        try:
+            wr.writerow([new_title_up.text])
+            link_up = new.find('a',{'class' : 'api_txt_lines dsc_txt_wrap'})
 
+            new_up = link_up['href']
+            wr.writerow([new_up])
+            wr.writerow('\n')
+        except UnicodeEncodeError:   continue
+        
     f.close()
 
 def print_upItem(item_name, item_sector, rank, output_str): 
