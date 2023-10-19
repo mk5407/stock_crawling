@@ -26,16 +26,16 @@ def stock_finance(item_code, rank, check_critria):
    dict_array = []
    diff_array = []
 
-   for i in range(6):
+   for i in range(10):
       dict_array.append(stock_dict.copy())
       diff_array.append(stock_dict.copy())
 
-   start_index = 5
+   start_index = 1
    for i in range(start_index, 11):
       j = i-start_index
 
-      # 연도
-      key = '분기'
+      # 연도&분기
+      key = '연도&분기'
 
       obj_year = main_html.select_one('#content > div.section.cop_analysis > div.sub_section > table > thead > tr:nth-child(2) > th:nth-child('+str(i)+')')
       
@@ -58,12 +58,15 @@ def stock_finance(item_code, rank, check_critria):
    check_row = [1,2,7]
    fail_array = [0, 0, 0]
    
-   for i in range(0, 6):
+   for i in range(0, 10):
       diff_array[i] = copy.deepcopy(dict_array[i])
 
       if i == 0:  continue
 
       for iter, (prev, cur, diff_key) in enumerate(zip(dict_array[i-1].values(), dict_array[i].values(), diff_array[i])):
+
+         if i == 4 : break;
+
          diff_value = 0
          diff_str = 0
 
