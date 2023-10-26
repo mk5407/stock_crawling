@@ -9,7 +9,7 @@ import Naver_F_info
 def today_upper():
     Public_Function.changeDirectory()
 
-    input_count = 10
+    input_count = 15
 
     # 상승한애들 이름, code 가져옴.
     item_arr, output_arr = Naver_top.get_today_top(int(input_count))

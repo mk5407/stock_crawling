@@ -44,7 +44,7 @@ def stock_finance(item_code, rank, check_critria):
 
       dict_array[j][key] = obj_year.text.strip()
 
-      arr_row = [1,2,3,4,7,10,11,12,13]
+      arr_row = [1,2,3,4,6,7,10,11,12,13]
 
       for k in arr_row:
          obj_key = main_html.select_one('#content > div.section.cop_analysis > div.sub_section > table > tbody > tr:nth-child(' + str(k) + ') > th > strong')
@@ -55,7 +55,8 @@ def stock_finance(item_code, rank, check_critria):
          main_key = obj_key.text.strip()
          dict_array[j][main_key] = main_html.select_one('#content > div.section.cop_analysis > div.sub_section > table > tbody > tr:nth-child('+ str(k) + ')> td:nth-child(' + str(i + 1) + ')').text.strip()
 
-   check_row = [1,2,7]
+   check_row = [5,8,10] #ROE, #PER, #PBR
+   fail_criteria = [5,5,5]
    fail_array = [0, 0, 0]
    
    for i in range(0, 10):
@@ -84,20 +85,38 @@ def stock_finance(item_code, rank, check_critria):
          if(check_critria == True):
             for index, row in enumerate(check_row) :
                if iter == row :
-                  if iter == 7 : #PER
+                  if (iter == 5) : #ROE
+                     if (cur == '' or cur =='-' ) : 
+                        cur = 0 
+                        continue
+                     if (type(cur) == str) :
+                        try :
+                           if ( float(cur) < 0 ) : fail_array[index]+=1
+                           if ( 0 > float(cur) and float(cur) < 5) : fail_array[index]+=1
+                           if ( float(cur) > 10 ) : 
+                              print("************ {} : ROE {} , PBR {} 있음. *********\n".format(dict_array[i]['연도&분기'],float(cur),dict_array[i]['PBR(배)']))
+                              fail_array[index]-=1
+                        except:
+                           print("ROE Exception 있음.")
+                  if iter == 8 : #PER
                      if (cur == '' or cur =='-' ) : cur = 0
                      if (type(cur) == str) :
                          try :
                            if ( float(cur) > 50 or float(cur) < 0 ) : fail_array[index]+=1
                          except:
                            print("PER 1000이상 있음.")
-                  else :
-                     if diff_value < 0 : fail_array[index]+=1
-               
-               if fail_array[index] >= 4 : 
-                  print("Critria fail Because {} ".format(diff_key))
-                  return (None,None)
-         
+                  if iter == 10 : #PBR
+                     if (cur == '' or cur =='-' ) : cur = 0
+                     if (type(cur) == str) :
+                        try :
+                           if ( float(cur) > 3 ) : fail_array[index]+=1
+                        except:
+                           print("PBR Exception 있음.")
+
+                  if fail_array[index] >= fail_criteria[index] : 
+                     print("Critria fail Because {} ".format(diff_key))
+                     return (None,None)
+ 
          output_str = "{} ({})".format(cur, diff_str)
          diff_array[i][diff_key] = output_str
 
@@ -158,13 +177,21 @@ def print_upItem(item_name, item_sector, item_code, rank, output_dict):
    wr.writerow(['재무재표요약'])
 
    for key in output_dict[0]:
-      if key == 'EPS(원)':   wr.writerow('\n')
 
+      if key == 'ROE(지배주주)': continue;
+      if key == 'EPS(원)':   wr.writerow('\n')
+      
       output_arr = [key,]
       for stock_dict in output_dict:
          output_arr.append(stock_dict[key])
 
       wr.writerow(output_arr)
+
+   # ROE
+   output_arr = ['ROE',]
+   for stock_dict in output_dict:
+         output_arr.append(stock_dict['ROE(지배주주)'])
+   wr.writerow(output_arr)
    
    f.close()
 
