@@ -9,21 +9,23 @@ import Naver_F_info
 def today_upper():
     Public_Function.changeDirectory()
 
-    input_count = 15
+    input_count = 10
 
     # 상승한애들 이름, code 가져옴.
-    item_arr, output_arr = Naver_top.get_today_top(int(input_count))
+    item_arr, output_arr = Naver_top.get_today_top_up(int(input_count))
 
     # 재무상황
-    for rank, up in enumerate(item_arr) :
+    for index, up in enumerate(item_arr) :
         #[23.05.31] 네이버증권 사이트 추가.
         #[23.05.31] 네이버증권 EPS, PER, BPS, PBR
+        
+        rank = '상한가'+ str(index)+ '_'
 
         (output_dict, output_sector) = Naver_finance.stock_finance(up['code'], rank, True)
 
         if type(output_dict) != list  : continue
     
-        Naver_top.print_upItem(up['name'], output_sector, rank, output_arr[rank])
+        Naver_top.print_upItem(up['name'], output_sector, rank, output_arr[index])
 
         #[23.05.31] 네이버증권 종목정보 추가. (0622완료)
         Naver_F_info.stock_info(up['code'], output_sector, rank)
@@ -33,6 +35,39 @@ def today_upper():
         #[23.05.31] 네이버증권> 전자공시
         # 네이버 뉴스 7개
         Naver_top.get_todayNews(up['name'], output_sector, rank, 7)
+
+    Public_Function.changeProjectDirectory()
+    return
+
+def today_top_trading():
+    Public_Function.changeDirectory()
+
+    input_count = 15
+
+    # 상승한애들 이름, code 가져옴.
+    item_arr, output_arr = Naver_top.get_today_top_trading(int(input_count))
+
+    # 재무상황
+    for index, top_trading in enumerate(item_arr) :
+        #[23.05.31] 네이버증권 사이트 추가.
+        #[23.05.31] 네이버증권 EPS, PER, BPS, PBR
+
+        rank = '거래량'+ str(index) +'_'
+
+        (output_dict, output_sector) = Naver_finance.stock_finance(top_trading['code'], rank, True)
+
+        if type(output_dict) != list  : continue
+    
+        Naver_top.print_upItem(top_trading['name'], output_sector, rank, output_arr[index])
+
+        #[23.05.31] 네이버증권 종목정보 추가. (0622완료)
+        Naver_F_info.stock_info(top_trading['code'], output_sector, rank)
+
+        Naver_finance.print_upItem(top_trading['name'], output_sector, top_trading['code'], rank, output_dict)
+
+        #[23.05.31] 네이버증권> 전자공시
+        # 네이버 뉴스 7개
+        Naver_top.get_todayNews(top_trading['name'], output_sector, rank, 7)
 
     Public_Function.changeProjectDirectory()
     return

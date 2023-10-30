@@ -36,11 +36,13 @@ btn1=Button(stockFrame, text='금일 상한가', padx=20, command=Stock_main.tod
 btn2=Button(stockFrame, text='종목분석', padx=20, command=call_getTodayData)
 btn3=Button(stockFrame, text='거래량전체', padx=20, command=call_getAllChanges)
 btn4=Button(stockFrame, text='MyList 분석', padx=20, command=Stock_main.checkMyList)
+btn5=Button(stockFrame, text='금일 거래량', padx=20, command=Stock_main.today_top_trading)
 
 btn1.place(x=10,y=5)
 btn2.place(x=125,y=5)
 btn3.place(x=225,y=5)
 btn4.place(x=335,y=5)
+btn5.place(x=10,y=35)
 
 #  Traking_Frame
 trakingFrame=LabelFrame(window, text='Tracking', width=480,height=60)

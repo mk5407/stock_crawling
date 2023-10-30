@@ -8,7 +8,7 @@ import string
 from bs4 import BeautifulSoup
 from Public_Function import g_encoding
 
-def get_today_top(count):
+def get_today_top_up(count):
     URL = 'https://finance.naver.com/'
     raw = requests.get(URL)
     html = BeautifulSoup(raw.text,'lxml')
@@ -43,6 +43,47 @@ def get_today_top(count):
         print('\n')
 
         item_dict = {'name':title_up, 'code':item_code, }
+        item_arr.append(copy.deepcopy(item_dict))
+
+    return item_arr, out_arr
+
+def get_today_top_trading(count):
+    URL = 'https://finance.naver.com/'
+    raw = requests.get(URL)
+    html = BeautifulSoup(raw.text,'lxml')
+    units_up =  html.select('#_topItems1>tr')  # 오늘 거래량 최대종목 전부 다 가져오는거
+
+    item_arr = []
+
+    out_dict = [] 
+    out_arr = []
+    for i in range(count):
+      out_arr.append(out_dict.copy())
+
+    now = time
+    print('=====금일 거래량 상위 종목=====')
+    print()
+
+    for index, unit in enumerate(units_up[:count]):
+        title_up = unit.select_one('#_topItems1 > tr> th > a').text
+        price_up = unit.select_one('#_topItems1 > tr> td')
+        diff = unit.select_one('#_topItems1 > tr > td:nth-child(3)').text
+        # up = up.replace('상한가', '↑')
+
+        percent_up = unit.select_one('#_topItems1 > tr> td:nth-child(4)')
+        
+        item_code = unit.select_one('#_topItems1 > tr> th > a')['href'].split('=')[1]
+        
+        out_arr[index].append(['종목 이름',title_up])
+        out_arr[index].append(['한 주당 가격', price_up.text])
+        out_arr[index].append(['전날 대비 가격 변동',diff])
+        out_arr[index].append(['전날 대비 등락',percent_up.text])
+
+        print('\n')
+
+        item_dict = {'name':title_up, 'code':item_code, }
+    
+
         item_arr.append(copy.deepcopy(item_dict))
 
     return item_arr, out_arr

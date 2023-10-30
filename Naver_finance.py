@@ -160,6 +160,12 @@ def today_changes(item_name, item_code):
       today_data['전일대비'] = '-{}'.format(today_data['전일대비'])
       today_data['퍼센트'] = '-{}'.format(today_data['퍼센트'])
 
+
+   # RSI 값 넣기.
+
+   # https://finance.naver.com/item/fchart.naver?code=360070
+   # #chartPrintArea > div.chartContainer > div:nth-child(17) > div > div > div.stx-study-data > label:nth-child(1)
+
    return today_data
 
 def print_upItem(item_name, item_sector, item_code, rank, output_dict):
