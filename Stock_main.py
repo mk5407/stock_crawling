@@ -3,6 +3,7 @@ import Naver_top
 import Naver_finance
 import SearchStockCode
 import Naver_F_info
+import Chart
 
 (stockNameList, stockCodeList) = Public_Function.getMyList()
 
@@ -111,6 +112,19 @@ def getAllChanges(stockName, stockCode):
     Naver_finance.stock_allChanges(stockName,stockCode)
     
     return
+
+def ShowStockChart(stockName, stockCode):
+    
+    if stockName == None:
+        return
+
+    if stockCode == '':
+        stockCode = Public_Function.findCode(stockName,stockNameList,stockCodeList)
+
+        if(stockCode== 0) :
+            stockCode =  SearchStockCode.searchCode(stockName)
+
+    Chart.showChart(stockName,stockCode)
 
 def checkMyList():
     Public_Function.changeTodaySubDirectory()

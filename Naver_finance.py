@@ -2,6 +2,7 @@ import requests
 import copy
 import csv
 import time
+import RSI
 
 from bs4 import BeautifulSoup
 from Public_Function import g_encoding
@@ -137,7 +138,7 @@ def today_changes(item_name, item_code):
    main_html = BeautifulSoup(raw.text, 'lxml')
 
    arr_blinds =  main_html.findAll('span',{'class':"blind"})
-   change_keywords = ['현재가','전일대비','퍼센트','전일가','고가','상한가','거래량','시가','저가','거래대금']
+   change_keywords = ['현재가','전일대비','퍼센트','전일가','고가','상한가','거래량','시가','저가','거래대금','RSI']
    
    index = 0
    today_data = {'종목이름':item_name}
@@ -162,10 +163,7 @@ def today_changes(item_name, item_code):
 
 
    # RSI 값 넣기.
-
-   # https://finance.naver.com/item/fchart.naver?code=360070
-   # #chartPrintArea > div.chartContainer > div:nth-child(17) > div > div > div.stx-study-data > label:nth-child(1)
-
+   today_data['RSI'] = RSI.getRSI_Value(item_code)
    return today_data
 
 def print_upItem(item_name, item_sector, item_code, rank, output_dict):
@@ -241,4 +239,4 @@ def stock_allChanges(item_name, item_code):
 
    output_file.close()
 
-   return 
+   return
