@@ -34,6 +34,7 @@ def tracking() :
         
         stock_code = stock_str[1]
 
+        print(stock_name)
         all_stockcodes.append(stock_code)
         all_changes.append(Naver_finance.today_changes(stock_name, stock_code))
 

@@ -138,7 +138,7 @@ def today_changes(item_name, item_code):
    main_html = BeautifulSoup(raw.text, 'lxml')
 
    arr_blinds =  main_html.findAll('span',{'class':"blind"})
-   change_keywords = ['현재가','전일대비','퍼센트','전일가','고가','상한가','거래량','시가','저가','거래대금','RSI']
+   change_keywords = ['현재가','전일대비','퍼센트','전일가','고가','상한가','거래량','시가','저가','거래대금']
    
    index = 0
    today_data = {'종목이름':item_name}

@@ -80,3 +80,5 @@ def showChart(stockName, item_code):
     fplt.autoviewrestore()
 
     fplt.show()
+
+    return
