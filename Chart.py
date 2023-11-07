@@ -52,7 +52,7 @@ def plot_rsi(df, ax):
 
 def showChart(stockName, item_code):
 
-    end_time = datetime.now()
+    end_time = datetime.now()+timedelta(days=1)
     start_time = (end_time+timedelta(days=-90)).strftime('%Y-%m-%d')
 
     df = yf.download(tickers = (item_code +'.KQ'), start=start_time, end=end_time.strftime('%Y-%m-%d'))

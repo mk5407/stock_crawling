@@ -23,7 +23,7 @@ def RSI(df):
     gains = diff
     losses = -diff
 
-    if len(gains) < 14 : return None
+    if len(gains) < 15 : return None
 
     with np.errstate(invalid='ignore'):
         gains[(gains<0)|np.isnan(gains)] = 0.0
@@ -64,7 +64,8 @@ def RSI(df):
 #     return data
 
 def getRSI_Value(item_code):
-    end_time = datetime.now()
+    now = datetime.now()
+    end_time = now + timedelta(days=1)
     start_time = (end_time+timedelta(days=-90)).strftime('%Y-%m-%d')
     
     df = yf.download(tickers = (item_code +'.KQ'), start=start_time, end=end_time.strftime('%Y-%m-%d'))
@@ -77,7 +78,7 @@ def getRSI_Value(item_code):
     if df is None : return 0
 
     while(True):
-        end_str = end_time.strftime('%Y-%m-%d')
+        end_str = now.strftime('%Y-%m-%d')
 
         try :
             rsi_value=df['rsi'][end_str]
