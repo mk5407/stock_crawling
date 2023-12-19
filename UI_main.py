@@ -39,12 +39,14 @@ btn2=Button(stockFrame, text='종목분석', padx=20, command=call_getTodayData)
 btn3=Button(stockFrame, text='거래량전체', padx=20, command=call_getAllChanges)
 btn4=Button(stockFrame, text='Chart보기', padx=20, command=call_showChart)
 btn5=Button(stockFrame, text='금일 거래량', padx=20, command=Stock_main.today_top_trading)
+btn6=Button(stockFrame, text='골든 크로스', padx=20, command=Stock_main.golden_cross)
 
 btn1.place(x=10,y=5)
 btn2.place(x=150,y=5)
 btn3.place(x=270,y=5)
 btn4.place(x=400,y=5)
 btn5.place(x=10,y=40)
+btn6.place(x=10,y=75)
 
 #  Traking_Frame
 trakingFrame=LabelFrame(window, text='Tracking', width=550,height=80)

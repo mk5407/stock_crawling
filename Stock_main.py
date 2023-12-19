@@ -22,7 +22,7 @@ def today_upper():
         
         rank = '상한가'+ str(index)+ '_'
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(up['code'], rank, True)
+        (output_dict, output_sector) = Naver_finance.stock_finance(up['code'], rank, False)
 
         if type(output_dict) != list  : continue
     
@@ -43,7 +43,7 @@ def today_upper():
 def today_top_trading():
     Public_Function.changeDirectory()
 
-    input_count = 15
+    input_count = 10
 
     # 상승한애들 이름, code 가져옴.
     item_arr, output_arr = Naver_top.get_today_top_trading(int(input_count))
@@ -55,7 +55,7 @@ def today_top_trading():
 
         rank = '거래량'+ str(index) +'_'
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(top_trading['code'], rank, True)
+        (output_dict, output_sector) = Naver_finance.stock_finance(top_trading['code'], rank, False)
 
         if type(output_dict) != list  : continue
     
@@ -68,6 +68,33 @@ def today_top_trading():
 
         #[23.05.31] 네이버증권> 전자공시
         # 네이버 뉴스 7개
+        Naver_top.get_todayNews(top_trading['name'], output_sector, rank, 7)
+
+    Public_Function.changeProjectDirectory()
+    return
+
+
+def golden_cross():
+    Public_Function.changeDirectory()
+
+    input_count = 40
+
+    # 상승한애들 이름, code 가져옴.
+    item_arr, output_arr = Naver_top.get_goldenCross(int(input_count))
+
+    # 재무상황
+    for index, top_trading in enumerate(item_arr) :
+
+        rank = '골든크로스'+ str(index) +'_'
+
+        (output_dict, output_sector) = Naver_finance.stock_finance(top_trading['code'], rank, True)
+
+        if type(output_dict) != list  : continue
+    
+        Naver_F_info.stock_info(top_trading['code'], output_sector, rank)
+
+        Naver_finance.print_upItem(top_trading['name'], output_sector, top_trading['code'], rank, output_dict)
+
         Naver_top.get_todayNews(top_trading['name'], output_sector, rank, 7)
 
     Public_Function.changeProjectDirectory()

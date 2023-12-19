@@ -88,6 +88,34 @@ def get_today_top_trading(count):
 
     return item_arr, out_arr
 
+def get_goldenCross(count):
+    URL = 'https://finance.naver.com/sise/item_gold.naver'
+
+    headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0'}
+    raw = requests.get(URL, headers = headers)
+    html = BeautifulSoup(raw.text,'lxml')
+    golden_list = html.findAll('a', 'tltle')
+    item_arr = []
+
+    out_dict = [] 
+    out_arr = []
+    for i in range(count):
+      out_arr.append(out_dict.copy())
+
+    now = time
+    print('=====골든크로스 체크=====')
+    print()
+
+    for index, unit in enumerate(golden_list):
+        item_name = unit.text
+        item_code = unit.get('href').split('=')[1]
+
+        item_dict = {'name':item_name, 'code':item_code, }
+    
+        item_arr.append(copy.deepcopy(item_dict))
+
+    return item_arr, out_arr
+
 def get_todayNews(item_name, item_sector, rank, count) :
 
     news_up = 'https://search.naver.com/search.naver?sm=tab_hty.top&where=news&query='+ item_name
@@ -127,4 +155,4 @@ def print_upItem(item_name, item_sector, rank, output_str):
         print(str)
         wr.writerow(str)
 
-    f.close()    
+    f.close()
