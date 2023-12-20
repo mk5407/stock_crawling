@@ -3,6 +3,7 @@ import Naver_top
 import Naver_finance
 import SearchStockCode
 import Naver_F_info
+import Tracking_main
 import Chart
 
 (stockNameList, stockCodeList) = Public_Function.getMyList()
@@ -22,7 +23,7 @@ def today_upper():
         
         rank = '상한가'+ str(index)+ '_'
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(up['code'], rank, False)
+        (output_dict, output_sector) = Naver_finance.stock_finance(up['code'], rank, True)
 
         if type(output_dict) != list  : continue
     
@@ -55,7 +56,7 @@ def today_top_trading():
 
         rank = '거래량'+ str(index) +'_'
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(top_trading['code'], rank, False)
+        (output_dict, output_sector) = Naver_finance.stock_finance(top_trading['code'], rank, True)
 
         if type(output_dict) != list  : continue
     
@@ -75,10 +76,10 @@ def today_top_trading():
 
 
 def golden_cross():
-    Public_Function.changeDirectory()
-
-    input_count = 40
-
+    Public_Function.changeGoldenDirectory()
+    
+    input_count = 77
+    outlist = []
     # 상승한애들 이름, code 가져옴.
     item_arr, output_arr = Naver_top.get_goldenCross(int(input_count))
 
@@ -96,6 +97,16 @@ def golden_cross():
         Naver_finance.print_upItem(top_trading['name'], output_sector, top_trading['code'], rank, output_dict)
 
         Naver_top.get_todayNews(top_trading['name'], output_sector, rank, 7)
+
+        outlist.append('{},{}'.format(top_trading['name'],top_trading['code']))
+
+    list_f = open('!Today_stock_list.txt', 'a', encoding='UTF8')    
+    
+    for entry in outlist:
+        list_f.writelines(entry+'\n')
+    list_f.close()
+
+    Tracking_main.g_tracking();
 
     Public_Function.changeProjectDirectory()
     return

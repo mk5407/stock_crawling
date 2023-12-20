@@ -96,22 +96,22 @@ def get_goldenCross(count):
     html = BeautifulSoup(raw.text,'lxml')
     golden_list = html.findAll('a', 'tltle')
     item_arr = []
-
     out_dict = [] 
     out_arr = []
+    now = time
+    
     for i in range(count):
       out_arr.append(out_dict.copy())
 
-    now = time
     print('=====골든크로스 체크=====')
     print()
 
-    for index, unit in enumerate(golden_list):
+    for index, unit in enumerate(golden_list[:count]):
         item_name = unit.text
         item_code = unit.get('href').split('=')[1]
 
         item_dict = {'name':item_name, 'code':item_code, }
-    
+
         item_arr.append(copy.deepcopy(item_dict))
 
     return item_arr, out_arr

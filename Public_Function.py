@@ -30,6 +30,12 @@ def changeDirectory() :
     createDirectory(directory)
     os.chdir(directory)
 
+def changeGoldenDirectory() :
+    now = time
+    directory = 'C:\Python\Test\GoldenCross\\'+ now.strftime('%Y-%m-%d')
+    createDirectory(directory)
+    os.chdir(directory)
+
 def changeTodaySubDirectory() :
     now = time
     directory = 'C:\Python\Test\Verify\\'+ now.strftime('%Y-%m-%d')
