@@ -63,9 +63,6 @@ def g_tracking() :
     all_changes=[]
     all_stockcodes=[]
 
-    line_num = 1
-    f.readline()
-
     # [23.07.05 code도 뽑아오기.]
     while True:
         line = f.readline()
@@ -84,8 +81,6 @@ def g_tracking() :
         print(stock_name)
         all_stockcodes.append(stock_code)
         all_changes.append(Naver_finance.today_changes(stock_name, stock_code))
-
-        line_num += 1
     
     f.close()
 
