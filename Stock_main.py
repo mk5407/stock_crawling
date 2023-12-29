@@ -17,26 +17,29 @@ def today_upper():
     item_arr, output_arr = Naver_top.get_today_top_up(int(input_count))
 
     # 재무상황
-    for index, up in enumerate(item_arr) :
+    for index, top_trading in enumerate(item_arr) :
         #[23.05.31] 네이버증권 사이트 추가.
         #[23.05.31] 네이버증권 EPS, PER, BPS, PBR
         
         rank = '상한가'+ str(index)+ '_'
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(up['code'], rank, True)
+        item_name = top_trading['name']
+        item_code = top_trading['code']
+
+        (output_dict, output_sector) = Naver_finance.stock_finance(item_code, rank, True)
 
         if type(output_dict) != list  : continue
     
-        Naver_top.print_upItem(up['name'], output_sector, rank, output_arr[index])
+        Naver_top.print_upItem(item_name, output_sector, rank, output_arr[index])
 
         #[23.05.31] 네이버증권 종목정보 추가. (0622완료)
-        Naver_F_info.stock_info(up['code'], output_sector, rank)
+        Naver_F_info.stock_info(item_code, output_sector, rank)
 
-        Naver_finance.print_upItem(up['name'], output_sector, up['code'], rank, output_dict)
+        Naver_finance.print_upItem(item_name, output_sector, item_code, rank, output_dict)
 
         #[23.05.31] 네이버증권> 전자공시
         # 네이버 뉴스 7개
-        Naver_top.get_todayNews(up['name'], output_sector, rank, 7)
+        Naver_top.get_todayNews(item_name, output_sector, rank, 7)
 
     Public_Function.changeProjectDirectory()
     return
@@ -55,21 +58,23 @@ def today_top_trading():
         #[23.05.31] 네이버증권 EPS, PER, BPS, PBR
 
         rank = '거래량'+ str(index) +'_'
+        item_name = top_trading['name']
+        item_code = top_trading['code']
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(top_trading['code'], rank, True)
+        (output_dict, output_sector) = Naver_finance.stock_finance(item_code, rank, True)
 
         if type(output_dict) != list  : continue
     
         Naver_top.print_upItem(top_trading['name'], output_sector, rank, output_arr[index])
 
         #[23.05.31] 네이버증권 종목정보 추가. (0622완료)
-        Naver_F_info.stock_info(top_trading['code'], output_sector, rank)
+        Naver_F_info.stock_info(item_code, output_sector, rank)
 
-        Naver_finance.print_upItem(top_trading['name'], output_sector, top_trading['code'], rank, output_dict)
+        Naver_finance.print_upItem(item_name, output_sector, item_code, rank, output_dict)
 
         #[23.05.31] 네이버증권> 전자공시
         # 네이버 뉴스 7개
-        Naver_top.get_todayNews(top_trading['name'], output_sector, rank, 7)
+        Naver_top.get_todayNews(item_name, output_sector, rank, 7)
 
     Public_Function.changeProjectDirectory()
     return
@@ -88,17 +93,20 @@ def golden_cross():
 
         rank = '골든크로스'+ str(index) +'_'
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(top_trading['code'], rank, True)
+        item_name = top_trading['name']
+        item_code = top_trading['code']
+
+        (output_dict, output_sector) = Naver_finance.stock_finance(item_code, rank, True)
 
         if type(output_dict) != list  : continue
     
-        Naver_F_info.stock_info(top_trading['code'], output_sector, rank)
+        Naver_F_info.stock_info(item_code, output_sector, rank)
 
-        Naver_finance.print_upItem(top_trading['name'], output_sector, top_trading['code'], rank, output_dict)
+        Naver_finance.print_upItem(item_name, output_sector, item_code, rank, output_dict)
 
-        Naver_top.get_todayNews(top_trading['name'], output_sector, rank, 7)
+        Naver_top.get_todayNews(item_name, output_sector, rank, 7)
 
-        outlist.append('{},{}'.format(top_trading['name'],top_trading['code']))
+        outlist.append('{},{}'.format(item_name,item_code))
 
     list_f = open('!Today_stock_list.txt', 'a', encoding='UTF8')    
     

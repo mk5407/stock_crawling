@@ -14,8 +14,16 @@ def stock_finance(item_code, rank, check_critria):
    main_html = BeautifulSoup(raw.text, 'lxml')
 
    item_name = main_html.select_one('#middle > div.h_company > div.wrap_company > h2 > a').text
-
    sector_check = main_html.select_one('#content > div.section.trade_compare > h4 > em > a')
+
+   arr_blinds =  main_html.findAll('span',{'class':"blind"})
+   amount = arr_blinds[20].text.strip('').replace(',','')
+      
+   if int(amount) < 100000 :
+      print(" {} : 거래량 10만 이하 ({})".format(item_name, int(amount)))
+      return None, None;
+
+
 
    if sector_check == None : return (None,None)
 
@@ -149,14 +157,14 @@ def today_changes(item_name, item_code):
          continue
 
       key = change_keywords[index]
-      
+
       if info_text.isdigit() == True :
          today_data[key] = format(int(info_text), ',')
       else :
          today_data[key] = format(float(info_text), ',')
          
       index+=1
-   
+
    if today_data['현재가'] < today_data['전일가'] :
       today_data['전일대비'] = '-{}'.format(today_data['전일대비'])
       today_data['퍼센트'] = '-{}'.format(today_data['퍼센트'])
@@ -240,3 +248,6 @@ def stock_allChanges(item_name, item_code):
    output_file.close()
 
    return
+
+
+# stock_finance('005930', 0, True)

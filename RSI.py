@@ -78,10 +78,12 @@ def getRSI_Value(item_code):
     if df is None : return 0
 
     while(True):
-        end_str = now.strftime('%Y-%m-%d')
-
+        end_str = end_time.strftime('%Y-%m-%d')
+        
         try :
             rsi_value=df['rsi'][end_str]
             return round(rsi_value,2)
         except:
             end_time=end_time+timedelta(days=-1)
+
+#getRSI_Value('005930')
