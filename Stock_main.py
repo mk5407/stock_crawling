@@ -12,6 +12,7 @@ def today_upper():
     Public_Function.changeDirectory()
 
     input_count = 10
+    outlist = []
 
     # 상승한애들 이름, code 가져옴.
     item_arr, output_arr = Naver_top.get_today_top_up(int(input_count))
@@ -40,14 +41,26 @@ def today_upper():
         #[23.05.31] 네이버증권> 전자공시
         # 네이버 뉴스 7개
         Naver_top.get_todayNews(item_name, output_sector, rank, 7)
+        outlist.append('{},{}'.format(item_name,item_code))
+
+    list_file = '!Today_top_list.txt'
+    list_f = open(list_file, 'a', encoding='UTF8')    
+    
+    for entry in outlist:
+        list_f.writelines(entry+'\n')
+    list_f.close()
+
+    Tracking_main.g_tracking(list_file);
 
     Public_Function.changeProjectDirectory()
+
     return
 
 def today_top_trading():
     Public_Function.changeDirectory()
 
     input_count = 10
+    outlist = []
 
     # 상승한애들 이름, code 가져옴.
     item_arr, output_arr = Naver_top.get_today_top_trading(int(input_count))
@@ -75,10 +88,20 @@ def today_top_trading():
         #[23.05.31] 네이버증권> 전자공시
         # 네이버 뉴스 7개
         Naver_top.get_todayNews(item_name, output_sector, rank, 7)
+        outlist.append('{},{}'.format(item_name,item_code))
+
+    list_file = '!Today_trade_list.txt'
+    list_f = open(list_file, 'a', encoding='UTF8')    
+    
+    for entry in outlist:
+        list_f.writelines(entry+'\n')
+    list_f.close()
+
+    Tracking_main.g_tracking(list_file);
 
     Public_Function.changeProjectDirectory()
-    return
 
+    return
 
 def golden_cross():
     Public_Function.changeGoldenDirectory()
@@ -108,15 +131,17 @@ def golden_cross():
 
         outlist.append('{},{}'.format(item_name,item_code))
 
-    list_f = open('!Today_stock_list.txt', 'a', encoding='UTF8')    
+    list_file = '!Today_golden_list.txt'
+    list_f = open(list_file, 'a', encoding='UTF8')    
     
     for entry in outlist:
         list_f.writelines(entry+'\n')
     list_f.close()
 
-    Tracking_main.g_tracking();
+    Tracking_main.g_tracking(list_file);
 
     Public_Function.changeProjectDirectory()
+
     return
 
 def getTodayData(stockName, stockCode):

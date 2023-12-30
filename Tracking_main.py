@@ -57,8 +57,8 @@ def tracking() :
     Public_Function.changeProjectDirectory()
 
 
-def g_tracking() :
-    f = open('!Today_stock_list.txt', 'rt', encoding='UTF8')
+def g_tracking(list_file) :
+    f = open(list_file, 'rt', encoding='UTF8')
 
     all_changes=[]
     all_stockcodes=[]
