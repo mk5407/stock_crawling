@@ -6,7 +6,6 @@ import Naver_F_info
 import Tracking_main
 import Chart
 
-(stockNameList, stockCodeList) = Public_Function.getMyList()
 
 def today_upper():
     Public_Function.changeDirectory()
@@ -151,11 +150,7 @@ def getTodayData(stockName, stockCode):
         return
 
     if stockCode == '':
-    
-        stockCode = Public_Function.findCode(stockName,stockNameList,stockCodeList)
-
-        if(stockCode== 0) :
-            stockCode =  SearchStockCode.searchCode(stockName)
+        stockCode = stockCode =  SearchStockCode.searchCode(stockName)
 
         # 재무상황
     (output_dict, output_sector) = Naver_finance.stock_finance(stockCode, 0, False)
@@ -175,10 +170,7 @@ def getAllChanges(stockName, stockCode):
         return
 
     if stockCode == '':
-        stockCode = Public_Function.findCode(stockName,stockNameList,stockCodeList)
-
-        if(stockCode== 0) :
-            stockCode =  SearchStockCode.searchCode(stockName)
+        stockCode =  SearchStockCode.searchCode(stockName)
 
     Naver_finance.stock_allChanges(stockName,stockCode)
     
@@ -190,14 +182,13 @@ def ShowStockChart(stockName, stockCode):
         return
 
     if stockCode == '':
-        stockCode = Public_Function.findCode(stockName,stockNameList,stockCodeList)
-
-        if(stockCode== 0) :
-            stockCode =  SearchStockCode.searchCode(stockName)
+        stockCode =  SearchStockCode.searchCode(stockName)
 
     Chart.showChart(stockName,stockCode)
 
 def checkMyList():
+    (stockNameList, stockCodeList) = Public_Function.getMyList()
+
     Public_Function.changeTodaySubDirectory()
 
     # [23.07.05 code도 뽑아오기.]

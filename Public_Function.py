@@ -1,6 +1,7 @@
 import os
 import time
 import platform
+import SearchStockCode
 
 # check platform 
 # Linux: Linux
@@ -44,6 +45,7 @@ def changeTodaySubDirectory() :
 
 def getMyList():
     f = open('stock_list.txt', 'rt', encoding='UTF8')
+    output_file = open('stock_study.txt', 'a', encoding=g_encoding, newline='')
 
     all_stockNames=[]
     all_stockCodes=[]
@@ -63,15 +65,21 @@ def getMyList():
         if stock_name == '': continue
         if stock_name.find('@') != -1 : continue
         
-        stock_code = stock_str[1]
-
+        stock_code = 0
+        
+        if len(stock_str) == 1 : 
+            stock_code = SearchStockCode.searchCode(stock_name)
+            output_file.write('{},{}\n'.format(stock_name,stock_code))
+        else :
+            stock_code = stock_str[1]
+            
         all_stockNames.append(stock_name)
         all_stockCodes.append(stock_code)
 
         line_num += 1
-    
-    f.close()
 
+    f.close()
+    output_file.close()
 
     return all_stockNames, all_stockCodes
 

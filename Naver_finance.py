@@ -262,4 +262,4 @@ def stock_allChanges(item_name, item_code):
    return
 
 
-stock_finance('290690', 0, True)
+# stock_finance('290690', 0, True)
