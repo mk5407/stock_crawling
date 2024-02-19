@@ -43,8 +43,8 @@ def changeTodaySubDirectory() :
     createDirectory(directory)
     os.chdir(directory)
 
-def getMyList():
-    f = open('stock_list.txt', 'rt', encoding='UTF8')
+def getMyList(fileName):
+    f = open(fileName, 'rt', encoding='UTF8')
     output_file = open('stock_study.txt', 'a', encoding=g_encoding, newline='')
 
     all_stockNames=[]

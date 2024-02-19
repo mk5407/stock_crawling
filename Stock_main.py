@@ -26,7 +26,7 @@ def today_upper():
         item_name = top_trading['name']
         item_code = top_trading['code']
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(item_code, rank, True)
+        (output_dict, output_sector) = Naver_finance.stock_finance(item_code, rank, False)
 
         if type(output_dict) != list  : continue
     
@@ -73,7 +73,7 @@ def today_top_trading():
         item_name = top_trading['name']
         item_code = top_trading['code']
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(item_code, rank, True)
+        (output_dict, output_sector) = Naver_finance.stock_finance(item_code, rank, False)
 
         if type(output_dict) != list  : continue
     
@@ -186,15 +186,15 @@ def ShowStockChart(stockName, stockCode):
 
     Chart.showChart(stockName,stockCode)
 
-def checkMyList():
-    (stockNameList, stockCodeList) = Public_Function.getMyList()
+def checkMyList(fileName):
+    (stockNameList, stockCodeList) = Public_Function.getMyList(fileName)
 
     Public_Function.changeTodaySubDirectory()
 
     # [23.07.05 code도 뽑아오기.]
     for stock_name, stock_code in zip(stockNameList, stockCodeList) :
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(stock_code, 0, True)
+        (output_dict, output_sector) = Naver_finance.stock_finance(stock_code, 0, False)
         
         if type(output_dict) != list  : continue
     

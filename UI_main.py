@@ -52,10 +52,20 @@ btn6.place(x=10,y=75)
 trakingFrame=LabelFrame(window, text='Tracking', width=550,height=80)
 trakingFrame.place(x=35,y=180)
 
-btn5=Button(trakingFrame, text='Today_Tracking', padx=20, command=Tracking_main.tracking)
-btn5.place(x=110,y=5)
 
-btn6=Button(trakingFrame, text='MyList 분석', padx=20, command=Stock_main.checkMyList)
-btn6.place(x=280,y=5)
+def call_VerifyMyList():
+    Stock_main.checkMyList("stock_list.txt")
+
+def call_VerifyNewList():
+    Stock_main.checkMyList("test_list.txt")
+
+btn7=Button(trakingFrame, text='Today_Tracking', padx=20, command=Tracking_main.tracking)
+btn7.place(x=30,y=5)
+
+btn8=Button(trakingFrame, text='MyList 분석', padx=20, command=call_VerifyMyList)
+btn8.place(x=200,y=5)
+
+btn9=Button(trakingFrame, text='NewList 분석', padx=20, command=call_VerifyNewList)
+btn9.place(x=340,y=5)
 
 mainloop()
