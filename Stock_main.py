@@ -194,7 +194,7 @@ def checkMyList(fileName):
     # [23.07.05 code도 뽑아오기.]
     for stock_name, stock_code in zip(stockNameList, stockCodeList) :
 
-        (output_dict, output_sector) = Naver_finance.stock_finance(stock_code, 0, False)
+        (output_dict, output_sector) = Naver_finance.stock_finance(stock_code, 0, True)
         
         if type(output_dict) != list  : continue
     

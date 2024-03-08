@@ -7,7 +7,7 @@ from tkinter import *
 
 window = Tk()
 window.title('2028 Stock Project')
-window.geometry('600x300')
+window.geometry('600x330')
 
 #  Main_Frame
 
@@ -49,7 +49,7 @@ btn5.place(x=10,y=40)
 btn6.place(x=10,y=75)
 
 #  Traking_Frame
-trakingFrame=LabelFrame(window, text='Tracking', width=550,height=80)
+trakingFrame=LabelFrame(window, text='Tracking', width=550,height=120)
 trakingFrame.place(x=35,y=180)
 
 
@@ -59,6 +59,12 @@ def call_VerifyMyList():
 def call_VerifyNewList():
     Stock_main.checkMyList("test_list.txt")
 
+def call_AllinOne():
+    Stock_main.today_upper()
+    Stock_main.today_top_trading()
+    Stock_main.golden_cross()
+    Tracking_main.tracking()
+
 btn7=Button(trakingFrame, text='Today_Tracking', padx=20, command=Tracking_main.tracking)
 btn7.place(x=30,y=5)
 
@@ -67,5 +73,8 @@ btn8.place(x=200,y=5)
 
 btn9=Button(trakingFrame, text='NewList 분석', padx=20, command=call_VerifyNewList)
 btn9.place(x=340,y=5)
+
+btn10=Button(trakingFrame, text='AllinOne', padx=10, width=46, command=call_AllinOne)
+btn10.place(x=30,y=50)
 
 mainloop()
