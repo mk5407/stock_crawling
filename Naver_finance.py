@@ -8,8 +8,12 @@ from bs4 import BeautifulSoup
 from Public_Function import g_encoding
 
 def stock_finance(item_code, rank, check_critria):
-
-   main_url = 'https://finance.naver.com/item/main.naver?code=' + item_code
+   try :
+      main_url = 'https://finance.naver.com/item/main.naver?code=' + item_code              
+   except:
+      print("stock code 에러!")
+      return
+   
    raw = requests.get(main_url)
    main_html = BeautifulSoup(raw.text, 'lxml')
 

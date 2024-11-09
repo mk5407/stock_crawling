@@ -63,7 +63,7 @@ def call_AllinOne():
     Stock_main.today_upper()
     Stock_main.today_top_trading()
     Stock_main.golden_cross()
-    Tracking_main.tracking()
+    # Tracking_main.tracking()
 
 btn7=Button(trakingFrame, text='Today_Tracking', padx=20, command=Tracking_main.tracking)
 btn7.place(x=30,y=5)
